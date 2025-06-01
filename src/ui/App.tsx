@@ -1,36 +1,44 @@
-import { useEffect, useState } from "react";
-import reactLogo from "./assets/react.svg";
+import { useEffect, useMemo, useState } from "react";
 import "./App.css";
+import { useStatistics } from "./useStatistics";
+import { BaseChart } from "./BaseChart";
 
 function App() {
-  const [count, setCount] = useState(0);
+  const stats = useStatistics(10);
 
-  useEffect(() => {
-    const unsub = window.electron.subscribeStatistics((stats) =>
-      console.log(stats)
-    );
-    return unsub;
-  }, []);
+  const cpuUsage = useMemo(
+    () => stats.map((s) => ({ value: s.cpuUsage * 100 })),
+    [stats]
+  );
+  const ramUsage = useMemo(
+    () => stats.map((s) => ({ value: s.ramUsage * 100 })),
+    [stats]
+  );
+  const storageUsage = useMemo(
+    () => stats.map((s) => ({ value: s.storageUsage * 100 })),
+    [stats]
+  );
 
   return (
     <>
-      <div>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+      <div
+        style={{
+          margin: "0 auto",
+          display: "flex",
+          flexDirection: "column",
+          gap: "30px",
+        }}
+      >
+        <div style={{ height: 200 }}>
+          <BaseChart data={cpuUsage} fill="#80bfff" stroke="#00ffff" />
+        </div>
+        <div style={{ height: 200 }}>
+          <BaseChart data={ramUsage} fill="#80bfff" stroke="#00ffff" />
+        </div>
+        <div style={{ height: 200 }}>
+          <BaseChart data={storageUsage} fill="#80bfff" stroke="#00ffff" />
+        </div>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
   );
 }
