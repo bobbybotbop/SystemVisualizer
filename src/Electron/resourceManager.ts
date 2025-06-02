@@ -24,7 +24,7 @@ export function getStaticData() {
   const totalStorage = getStorageData().total;
   const cpuModel = os.cpus()[0].model;
   //total mems is in mb
-  const totalMemGB = Math.floor(osUtils.totalmem() / 1024);
+  const totalMemGB = Math.ceil(osUtils.totalmem() / 1024);
 
   return {
     totalStorage,
@@ -49,7 +49,7 @@ function getStorageData() {
   const free = s.bsize * s.bfree;
 
   return {
-    total: Math.floor(tot / 1_000_000_000),
+    total: Math.ceil(tot / 1_000_000_000),
     usage: 1 - free / tot,
   };
 }

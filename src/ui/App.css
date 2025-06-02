@@ -1,8 +1,13 @@
 #root {
-  max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 0;
   text-align: center;
+}
+
+.titlebar {
+  height: 31px;
+  -webkit-app-region: drag;
+  background-color: #2f3241;
 }
 
 .logo {
@@ -39,4 +44,115 @@
 
 .read-the-docs {
   color: #888;
+}
+
+.chart-container {
+  background-color: #1a1a1a;
+  border-radius: 8px;
+  padding: 16px;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+.chart-container:hover {
+  transform: scale(1.02);
+}
+
+.charts-layout {
+  position: relative;
+  display: flex;
+  gap: 40px;
+}
+
+.charts-layout.animating {
+  pointer-events: none;
+}
+
+.selected-chart-wrapper {
+  position: relative;
+  width: 500px;
+  overflow: hidden;
+  z-index: -1;
+}
+
+.selected-chart {
+  animation: slideInRight 0.7s cubic-bezier(0, 1, 1, 1),
+    blurIn 0.7s cubic-bezier(0, 1, 1, 1);
+}
+
+@keyframes slideInRight {
+  0% {
+    transform: translateX(-70%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInLeft {
+  0% {
+    transform: translateX(70%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideOutRight {
+  0% {
+    transform: translateX(-70%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
+}
+
+@keyframes blurIn {
+  0% {
+    filter: blur(8px);
+  }
+  100% {
+    filter: blur(0);
+  }
+}
+
+.selected-chart .chart-container:hover {
+  transform: none;
+}
+
+.chart-container.selected {
+  box-shadow: 0 0 0 2px #74b1be;
+}
+
+.chart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  color: rgba(255, 255, 255, 0.87);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.chart-box {
+  height: 120px;
+  background-color: #242424;
+  border-radius: 4px;
+  padding: 8px;
+}
+
+.selected-chart .chart-box {
+  height: 560px;
+}
+
+.chart-container.animate-in {
+  animation: slideInLeft 0.7s cubic-bezier(0, 1, 1, 1),
+    blurIn 0.6s cubic-bezier(0, 1, 1, 1);
+  transform: translateX(-70%);
+}
+
+.chart-container.animate-out {
+  animation: slideOutRight 0.7s cubic-bezier(0, 1, 1, 1),
+    blurIn 0.6s cubic-bezier(0, 1, 1, 1);
+  transform: translateX(-70%);
 }

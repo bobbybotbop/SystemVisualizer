@@ -14,3 +14,8 @@ export function getPreloadPath() {
 export function getUIPath() {
   return path.join(app.getAppPath(), "/dist-react/index.html");
 }
+
+export function getAssetPath() {
+  //the file path would be outside of the packaged scripts this file is contained in
+  return path.join(app.getAppPath(), isDev() ? "." : "..", "/src/assets");
+}
